@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenoGuard AI | Simple Fetal Health Scan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --primary-light: #e0f2fe;
+            --accent: #6366f1;
+            --bg-main: #f8fafc;
+            --text-header: #0f172a;
+            --text-body: #334155;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --success: #10b981;
+            --success-bg: #ecfdf5;
+            --warning: #f59e0b;
+            --warning-bg: #fffbeb;
+            --danger: #ef4444;
+            --danger-bg: #fef2f2;
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: radial-gradient(at 0% 0%, hsla(203, 83%, 95%, 1) 0, transparent 50%), 
+                              radial-gradient(at 50% 0%, hsla(225, 39%, 95%, 1) 0, transparent 50%);
+            color: var(--text-body);
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        .container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
+
+        .header { text-align: center; margin-bottom: 50px; }
+        .logo { display: inline-flex; align-items: center; gap: 12px; font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
+        .logo span { color: var(--text-header); }
+        .subtitle { color: var(--text-muted); font-size: 1.1rem; }
+
+        .main-card { background: var(--white); border-radius: 24px; box-shadow: var(--shadow-lg); padding: 40px; }
+
+        .section-title { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        .section-title i { font-size: 1.4rem; background: var(--primary-light); color: var(--primary); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 12px; }
+        .section-title h2 { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 600; color: var(--text-header); }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .input-group label { display: block; font-size: 0.875rem; font-weight: 500; color: var(--text-muted); margin-bottom: 8px; }
+        .input-group input { width: 100%; padding: 14px; background: #f1f5f9; border: 2px solid transparent; border-radius: 12px; outline: none; transition: 0.3s; }
+        .input-group input:focus { background: var(--white); border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
+
+        .upload-area { background: #f8fafc; border: 2px dashed #cbd5e1; border-radius: 20px; padding: 40px 20px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .upload-area:hover { background: var(--primary-light); border-color: var(--primary); }
+        .upload-area i { font-size: 3rem; margin-bottom: 16px; color: var(--primary); }
+
+        .analyze-btn { width: 100%; margin-top: 40px; background: linear-gradient(135deg, var(--primary), var(--accent)); color: var(--white); border: none; padding: 20px; border-radius: 16px; font-size: 1.125rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: 0.3s; }
+        .analyze-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
+
+        .results-container { margin-top: 40px; background: var(--white); border-radius: 24px; padding: 40px; box-shadow: var(--shadow-lg); animation: slideUp 0.5s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .result-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px; }
+        .risk-tag { padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem; }
+        .risk-tag.low { background: var(--success-bg); color: var(--success); }
+        .risk-tag.medium { background: var(--warning-bg); color: var(--warning); }
+        .risk-tag.high { background: var(--danger-bg); color: var(--danger); }
+
+        .result-main { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; justify-content: center; }
+        .percentage-circle { text-align: center; min-width: 200px; }
+        .circular-chart { width: 180px; height: 180px; }
+        .circle-bg { stroke: #f1f5f9; fill: none; stroke-width: 3.8; }
+        .circle { fill: none; stroke-width: 2.8; stroke-linecap: round; transition: stroke-dasharray 1s ease; }
+        .percentage { fill: var(--text-header); font-size: 0.55rem; font-weight: 700; text-anchor: middle; font-family: 'Outfit', sans-serif; }
+
+        .findings-list { flex: 1; min-width: 300px; }
+        .findings-list li { background: #f8fafc; padding: 15px; border-radius: 12px; margin-bottom: 10px; list-style: none; display: flex; gap: 10px; align-items: start; }
+
+        .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.9); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000; }
+        .spinner { width: 50px; height: 50px; border: 4px solid var(--primary-light); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .hidden { display: none !important; }
+        .footer { text-align: center; margin-top: 40px; color: var(--text-muted); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-dna"></i>
+                <h1>GenoGuard<span>AI</span></h1>
+            </div>
+            <p class="subtitle">Simple Genetic Disorder Risk Assessment</p>
+        </header>
+
+        <main class="main-card">
+            <div class="section-title">
+                <i class="fas fa-flask"></i>
+                <h2>1. Biochemical Data</h2>
+            </div>
+            <div class="form-grid">
+                <div class="input-group">
+                    <label>HCG Levels (mIU/mL)</label>
+                    <input type="number" id="hcg" placeholder="e.g. 50000">
+                </div>
+                <div class="input-group">
+                    <label>PAPP-A (mU/L)</label>
+                    <input type="number" id="pappa" placeholder="e.g. 1.2">
+                </div>
+                <div class="input-group">
+                    <label>AFP (ng/mL)</label>
+                    <input type="number" id="afp" placeholder="e.g. 35.5">
+                </div>
+                <div class="input-group">
+                    <label>Urine Protein (%)</label>
+                    <input type="number" id="urine_protein" placeholder="e.g. 0.05">
+                </div>
+            </div>
+
+            <div class="section-title">
+                <i class="fas fa-ultrasound"></i>
+                <h2>2. Ultrasound Scan</h2>
+            </div>
+            <div class="upload-area" id="dropZone">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click or Drag Photo Here</p>
+                <input type="file" id="imageUpload" hidden accept="image/*">
+                <div id="imageName" style="margin-top: 10px; font-size: 0.9rem; color: var(--primary);"></div>
+            </div>
+
+            <button id="analyzeBtn" class="analyze-btn">
+                <span>Run Genetic Analysis</span>
+                <i class="fas fa-magic"></i>
+            </button>
+        </main>
+
+        <section id="resultsSection" class="results-container hidden">
+            <div class="result-header">
+                <h2>Health Assessment Report</h2>
+                <div id="riskLevelTag" class="risk-tag">Low Risk</div>
+            </div>
+
+            <div class="result-main">
+                <div class="percentage-circle">
+                    <svg viewBox="0 0 36 36" class="circular-chart">
+                        <path class="circle-bg" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <path id="circleStroke" class="circle" fill="none" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                        <text x="18" y="20.35" class="percentage" id="riskPercentageText">0%</text>
+                    </svg>
+                    <p style="margin-top: 10px; font-weight: 600;">Chance of Genetic Disorder</p>
+                </div>
+
+                <div class="findings-list">
+                    <h3>Analysis Details:</h3>
+                    <ul id="findingsContainer"></ul>
+                </div>
+            </div>
+            
+            <button style="width: 100%; padding: 15px; border: 1px solid #cbd5e1; background: none; border-radius: 12px; margin-top: 30px; cursor: pointer;" onclick="location.reload()">New Analysis</button>
+        </section>
+
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="spinner"></div>
+            <p>AI analyzing markers...</p>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2026 GenoGuard AI. For educational use only. Always consult a doctor.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

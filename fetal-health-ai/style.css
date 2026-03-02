@@ -1,0 +1,265 @@
+:root {
+    /* Sophisticated Medical Color Palette */
+    --primary: #0ea5e9;
+    /* Sky Blue */
+    --primary-dark: #0284c7;
+    --primary-light: #e0f2fe;
+    --accent: #6366f1;
+    /* Indigo */
+    --bg-main: #f8fafc;
+    --text-header: #0f172a;
+    --text-body: #334155;
+    --text-muted: #64748b;
+    --white: #ffffff;
+
+    /* Risk Levels */
+    --success: #10b981;
+    --success-bg: #ecfdf5;
+    --warning: #f59e0b;
+    --warning-bg: #fffbeb;
+    --danger: #ef4444;
+    --danger-bg: #fef2f2;
+
+    /* Shadows & Borders */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    background-image: radial-gradient(at 0% 0%, hsla(203, 83%, 95%, 1) 0, transparent 50%),
+        radial-gradient(at 50% 0%, hsla(225, 39%, 95%, 1) 0, transparent 50%),
+        radial-gradient(at 100% 0%, hsla(339, 49%, 95%, 1) 0, transparent 50%);
+    color: var(--text-body);
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+/* Header Styling */
+.header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.logo i {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 4px 6px rgba(14, 165, 233, 0.2));
+}
+
+.logo span {
+    color: var(--text-header);
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* Main Card */
+.main-card {
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    color: var(--accent);
+}
+
+.section-title i {
+    font-size: 1.4rem;
+    background: var(--primary-light);
+    color: var(--primary);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.section-title h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-header);
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    background: #f1f5f9;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    color: var(--text-header);
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    background: var(--white);
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+.upload-area {
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 20px;
+    padding: 50px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+}
+
+.upload-area i {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.analyze-btn {
+    width: 100%;
+    margin-top: 40px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: var(--white);
+    border: none;
+    padding: 20px;
+    border-radius: 16px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+}
+
+.analyze-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    filter: brightness(1.1);
+}
+
+/* Results Customization */
+.results-container {
+    margin-top: 40px;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.risk-tag.low {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid #d1fae5;
+}
+
+.risk-tag.medium {
+    background: var(--warning-bg);
+    color: var(--warning);
+    border: 1px solid #fef3c7;
+}
+
+.risk-tag.high {
+    background: var(--danger-bg);
+    color: var(--danger);
+    border: 1px solid #fee2e2;
+}
+
+.circle-bg {
+    stroke: #f1f5f9;
+    fill: none;
+    stroke-width: 3.8;
+}
+
+.circle {
+    fill: none;
+    stroke-width: 2.8;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1s ease;
+}
+
+
+.percentage {
+    fill: var(--text-header);
+    font-size: 0.55rem;
+    font-weight: 700;
+    text-anchor: middle;
+}
+
+
+.findings-list li {
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #f1f5f9;
+}
+
+.loading-overlay {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+}
+
+.spinner {
+    border-top: 4px solid var(--primary);
+}
+
+.footer {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
